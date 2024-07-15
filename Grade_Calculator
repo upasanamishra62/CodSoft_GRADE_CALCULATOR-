@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+public class Grade_Calculator {
+    public static void main(String[] args) {
+        Scanner cal = new Scanner(System.in);
+
+        System.out.println("Enter the number of subjects:");
+        int numSubjects = cal.nextInt();
+
+        if (numSubjects < 1) {
+            System.out.println("Invalid input. Number of subjects must be 1 or more.");
+            return;
+        }
+
+        int[] marks = new int[numSubjects];
+
+        System.out.println("Enter the marks obtained in each subject (out of 100):");
+        for (int i = 0; i < numSubjects; i++) {
+            while (true) {
+                System.out.print("Subject " + (i + 1) + ": ");
+                marks[i] = cal.nextInt();
+
+                if ((marks[i] < 0) || (marks[i] > 100)) {
+                    System.out.println("invalid input. Marks must be between 0 to 100.");
+                } else {
+                    break;
+                }
+            }
+        }
+
+
+
+        int totalMarks = calculateTotalMarks(marks);
+
+        double AvgPercentage = calculateAvgPercentage(totalMarks, numSubjects);
+
+        String grade = Grade(AvgPercentage);
+
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("Average Percentage: " + String.format("%.2f", AvgPercentage) + "%");
+        System.out.println("Grade: " + grade);
+    }
+
+     private static int calculateTotalMarks(int[] marks) {
+        int totalMarks = 0;
+        for (int mark : marks) {
+            totalMarks += mark;
+        }
+        return totalMarks;
+    }
+
+    private static double calculateAvgPercentage(int totalMarks, int numSubjects) {
+        return (double) totalMarks / numSubjects;
+    }
+
+    private static String Grade(double AvgPercentage) {
+        if (AvgPercentage >= 90) {
+            return "A";
+        } else if (AvgPercentage >= 80) {
+            return "B";
+        } else if (AvgPercentage >= 70) {
+            return "C";
+        } else if (AvgPercentage >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+}
